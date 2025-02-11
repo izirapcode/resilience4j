@@ -1,0 +1,12 @@
+resilience4j:
+  circuitbreaker:
+    instances:
+      dataService1:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 10
+        waitDurationInOpenState: 5000
+        permittedNumberOfCallsInHalfOpenState: 2
+        automatic-transition-from-open-to-half-open-enabled: true
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED

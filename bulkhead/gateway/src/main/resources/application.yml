@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        enableSemaphoreDefaultBulkhead: true
+
+resilience4j.bulkhead:
+  configs:
+    default:
+      maxConcurrentCalls: 3
+  
+  instances:
+    worker1:
+      maxConcurrentCalls: 2
+      max-wait-duration:
+        seconds: 1
+    worker2:
+      maxConcurrentCalls: 2
+      max-wait-duration:
+        seconds: 1
+    worker3:
+      max-concurrent-calls: 2
+      max-wait-duration:
+        seconds: 1
+
+resilience4j:
+  thread-pool-bulkhead:
+    configs:
+      default:
+        maxThreadPoolSize: 2
+        coreThreadPoolSize: 2
+        queueCapacity: 2
+    instances:
+      worker1:
+        baseConfig: default
+      worker2:
+        maxThreadPoolSize: 1
+        coreThreadPoolSize: 1
+        queueCapacity: 1
+      worker3:
+        baseConfig: default
+
+
+server:
+  tomcat:
+    threads:
+      max: 10
+      min-spare: 10

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  gateway-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: gateway-service/target/gateway-service-1.0.0.jar
+    ports:
+      - "8080:8080"
+    depends_on:
+      - data-service-1
+      - data-service-2
+    networks:
+      - my-network
+
+  data-service-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: data-service-1/target/data-service-1-1.0.0.jar
+    ports:
+      - "8081:8081"
+    networks:
+      - my-network
+
+  data-service-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: data-service-2/target/data-service-2-1.0.0.jar
+    ports:
+      - "8082:8082"
+    networks:
+      - my-network
+
+  request-data:
+    image: alpine
+    volumes:
+      - ./data-fetcher.sh:/data-fetcher.sh
+    command: sh -c "apk add --no-cache curl && sh /data-fetcher.sh"
+    networks:
+      - my-network
+
+
+
+networks:
+  my-network:
+    driver: bridge
