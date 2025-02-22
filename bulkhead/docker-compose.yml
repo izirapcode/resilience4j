@@ -13,8 +13,6 @@ services:
       - worker-service-1
       - worker-service-2
       - worker-service-3
-    environment:
-      - JAVA_OPTS=-Dserver.tomcat.threads.max=10 -Dserver.tomcat.threads.min-spare=10 
     networks:
       - my-network
 

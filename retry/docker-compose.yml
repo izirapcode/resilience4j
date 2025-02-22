@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  retry-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: retry-service/target/retry-service-0.0.1-SNAPSHOT.jar
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+
+  dependency-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: dependency-service/target/dependency-service-0.0.1-SNAPSHOT.jar
+    ports:
+      - "8081:8081"
+    networks:
+      - my-network
+
+
+
+networks:
+  my-network:
+    driver: bridge

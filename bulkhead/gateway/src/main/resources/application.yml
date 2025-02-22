@@ -41,10 +41,3 @@ resilience4j:
         queueCapacity: 1
       worker3:
         baseConfig: default
-
-
-server:
-  tomcat:
-    threads:
-      max: 10
-      min-spare: 10
